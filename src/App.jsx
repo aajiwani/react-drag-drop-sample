@@ -8,7 +8,7 @@ class App extends React.Component {
     return (
       <Container>
         <Row>
-          <div>{"Main View"}</div>
+          <div>{"My View"}</div>
         </Row>
         <Divider />
         <Row>
@@ -16,34 +16,39 @@ class App extends React.Component {
           <Card
               image="resources/images/tree-1.png"
               contentText="Tree One"
+              cardId="1"
             />
             <Card
               image="resources/images/tree-2.png"
               contentText="Tree Two"
+              cardId="2"
             />
             <Card
               image="resources/images/tree-3.png"
               contentText="Tree Three"
+              cardId="3"
             />
             <Card
               image="resources/images/tree-4.png"
               contentText="Tree Four"
+              cardId="4"
             />
             <Card
               image="resources/images/tree-5.png"
               contentText="Tree Five"
+              cardId="5"
             />
           </div>
-          <div className={"col s6"}>
+          <div className={"col s6 pink"}>
             <Card
-              title="Amir"
               image="resources/images/animal-1.png"
               contentText="Animal One"
+              cardId="6"
             />
             <Card
-              title="Amir"
               image="resources/images/animal-2.png"
               contentText="Animal Two"
+              cardId="7"
             />
           </div>
         </Row>

@@ -1,3 +1,5 @@
+const path = require("path");
+
 var config = {
   entry: "./main.js",
 
@@ -11,12 +13,9 @@ var config = {
     port: 8080
   },
 
-  exclude: [path.resolve(__dirname, "node_modules")],
-
-  include: [path.resolve(__dirname, "src")],
-
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
+    modules: [path.resolve("src"), path.resolve(__dirname, "node_modules")]
   },
 
   module: {
@@ -26,10 +25,7 @@ var config = {
         exclude: /node_modules/,
         loader: "babel-loader",
 
-        query: {
-          plugins: ["transform-runtime"],
-          presets: ["es2015", "react", "stage-0"]
-        }
+        query: {}
       }
     ]
   }
