@@ -1,55 +1,74 @@
 import React from "react";
 import * as Components from "./Components";
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 const { Container, Card, Divider, Row } = Components;
 
+let sideACards = [
+  { image: "tree-1", title: "Tree 1" },
+  { image: "tree-2", title: "Tree 2" },
+  { image: "tree-3", title: "Tree 3" },
+  { image: "tree-4", title: "Tree 4" },
+  { image: "tree-5", title: "Tree 5" }
+];
+
+let sideBCards = [
+  { image: "animal-1", title: "Animal 1" },
+  { image: "animal-2", title: "Animal 2" }
+];
+
+let createCard = (title, imageFile, cardId) => {
+  return <Card
+    image={"resources/images/" + imageFile + ".png"}
+    contentText={title}
+    cardId={cardId}
+  />;
+}
+
+@DragDropContext(HTML5Backend)
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.lastUsedCardIndex = 0;
+  }
+
   render() {
     return (
-      <Container>
+      <Container style={{
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        flexWrap: 'nowrap',
+        flex: 1
+      }}>
         <Row>
           <div>{"My View"}</div>
         </Row>
         <Divider />
         <Row>
-          <div className={"col s6 orange"}>
-          <Card
-              image="resources/images/tree-1.png"
-              contentText="Tree One"
-              cardId="1"
-            />
-            <Card
-              image="resources/images/tree-2.png"
-              contentText="Tree Two"
-              cardId="2"
-            />
-            <Card
-              image="resources/images/tree-3.png"
-              contentText="Tree Three"
-              cardId="3"
-            />
-            <Card
-              image="resources/images/tree-4.png"
-              contentText="Tree Four"
-              cardId="4"
-            />
-            <Card
-              image="resources/images/tree-5.png"
-              contentText="Tree Five"
-              cardId="5"
-            />
+          <div className={"col s6 orange"} style={{
+            display: 'flex',
+            flex: '0.5',
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}>
+            {sideACards.map((card) =>
+              createCard(card.title, card.image, "Card-" + this.lastUsedCardIndex++)
+            )}
           </div>
-          <div className={"col s6 pink"}>
-            <Card
-              image="resources/images/animal-1.png"
-              contentText="Animal One"
-              cardId="6"
-            />
-            <Card
-              image="resources/images/animal-2.png"
-              contentText="Animal Two"
-              cardId="7"
-            />
+          <div className={"col s6 pink"} style={{
+            display: 'flex',
+            flex: '0.5',
+            flexWrap: 'wrap',
+            flexDirection: 'row'
+          }}>
+            {sideBCards.map((card) =>
+              createCard(card.title, card.image, "Card-" + this.lastUsedCardIndex++)
+            )}
           </div>
         </Row>
       </Container>
