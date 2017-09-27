@@ -18,7 +18,7 @@ export default class Card extends React.Component {
 
   render() {
     // Your component receives its own props as usual
-    const { id } = this.props;
+    const { cardId } = this.props;
 
     // These two props are injected by React DnD,
     // as defined by your `collect` function above:
@@ -34,7 +34,7 @@ export default class Card extends React.Component {
             <p className={"center-align"}>{this.props.contentText}</p>
           </div>
           <div>
-            I am a draggable card number {id}
+            I am a draggable card number {cardId}
             {isDragging && " (and I am being dragged now)"}
           </div>
         </div>
