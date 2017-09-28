@@ -3,7 +3,7 @@ import { DropTarget } from "react-dnd";
 import CardSpaceTarget from "DragNDrop/Target/CardSpaceTarget";
 import Constants from "DragNDrop/Constants";
 
-@DropTarget(Constants.CARD_SPACE, CardSpaceTarget, (connect, monitor) => ({
+@DropTarget(Constants.CARD, CardSpaceTarget, (connect, monitor) => ({
   // Call this function inside render()
   // to let React DnD handle the drag events:
   connectDropTarget: connect.dropTarget(),

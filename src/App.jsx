@@ -6,24 +6,26 @@ import HTML5Backend from "react-dnd-html5-backend";
 const { Container, Card, Divider, Row, CardSpace } = Components;
 
 let sideACards = [
-  { image: "tree-1", title: "Tree 1" },
-  { image: "tree-2", title: "Tree 2" },
-  { image: "tree-3", title: "Tree 3" },
-  { image: "tree-4", title: "Tree 4" },
-  { image: "tree-5", title: "Tree 5" }
+  { image: "tree-1", title: "Tree 1", space: "space_a" },
+  { image: "tree-2", title: "Tree 2", space: "space_a" },
+  { image: "tree-3", title: "Tree 3", space: "space_a" },
+  { image: "tree-4", title: "Tree 4", space: "space_a" },
+  { image: "tree-5", title: "Tree 5", space: "space_a" }
 ];
 
 let sideBCards = [
-  { image: "animal-1", title: "Animal 1" },
-  { image: "animal-2", title: "Animal 2" }
+  { image: "animal-1", title: "Animal 1", space: "space_b" },
+  { image: "animal-2", title: "Animal 2", space: "space_b" }
 ];
 
-let createCard = (title, imageFile, cardId) => {
+let createCard = (cardInfo) => {
   return (
     <Card
-      image={"resources/images/" + imageFile + ".png"}
-      contentText={title}
-      cardId={cardId}
+      image={"resources/images/" + cardInfo.image + ".png"}
+      contentText={cardInfo.title}
+      cardId={cardInfo.cardId}
+      key={"Unique-Card-" + cardInfo.cardId}
+      space={cardInfo.space}
     />
   );
 };
@@ -48,22 +50,20 @@ class App extends React.Component {
         </Row>
         <Divider />
         <Row>
-          <CardSpace bgColor="orange">
+          <CardSpace bgColor="orange" id="space_a">
             {sideACards.map(card =>
-              createCard(
-                card.title,
-                card.image,
-                "Card-" + this.lastUsedCardIndex++
-              )
+              createCard({
+                ...card,
+                cardId: "Card-" + this.lastUsedCardIndex++
+              })
             )}
           </CardSpace>
-          <CardSpace bgColor="green">
+          <CardSpace bgColor="green" id="space_b">
             {sideBCards.map(card =>
-              createCard(
-                card.title,
-                card.image,
-                "Card-" + this.lastUsedCardIndex++
-              )
+              createCard({
+                ...card,
+                cardId: "Card-" + this.lastUsedCardIndex++
+              })
             )}
           </CardSpace>
         </Row>

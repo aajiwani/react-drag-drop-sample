@@ -3,7 +3,10 @@ import CardActions from '../Actions/Card';
 const cardSource = {
     beginDrag(props) {
       // Return the data describing the dragged item
-      const item = { id: props.cardId };
+      const item = {
+        id: props.cardId,
+        from_space: props.space
+      };
       return item;
     },
   
