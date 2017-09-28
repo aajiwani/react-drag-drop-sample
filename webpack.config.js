@@ -14,7 +14,7 @@ var config = {
   },
 
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".jsx", ".js"],
     modules: [path.resolve("src"), path.resolve(__dirname, "node_modules")]
   },
 

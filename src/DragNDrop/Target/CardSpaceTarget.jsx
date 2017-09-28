@@ -2,17 +2,13 @@
  * Specifies the drop target contract.
  * All methods are optional.
  */
-import { findDOMNode } from "react-dom";
+// import { findDOMNode } from "react-dom";
 import _ from "lodash";
 
 const cardSpaceTarget = {
   canDrop(props, monitor) {
     const item = monitor.getItem();
     return !_.isEqual(item.from_space, props.id);
-  },
-
-  hover(props, monitor, component) {
-    const canDrop = monitor.canDrop();
   },
 
   drop(props, monitor, component) {
@@ -23,12 +19,19 @@ const cardSpaceTarget = {
     }
 
     // Obtain the dragged item
-    // const item = monitor.getItem();
-    
-    return {
+    const item = monitor.getItem();
+
+    let result = {
       moved: true,
-      to_space: props.id
+      to_space: props.id,
+      card_id: item.id,
+      from_space: item.from_space
     };
+
+    // console.log('Drop Result: ');
+    // console.dir(result);
+    
+    return result;
   }
 };
 

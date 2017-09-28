@@ -33,10 +33,6 @@ export default class Card extends React.Component {
           <div className={"card-content"}>
             <p className={"center-align"}>{this.props.contentText}</p>
           </div>
-          <div>
-            I am a draggable card number {cardId}
-            {isDragging && " (and I am being dragged now)"}
-          </div>
         </div>
       </div>
     );

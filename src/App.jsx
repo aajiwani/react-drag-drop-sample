@@ -2,39 +2,40 @@ import React from "react";
 import * as Components from "./Components";
 import { DragDropContext } from "react-dnd";
 import HTML5Backend from "react-dnd-html5-backend";
+import { connect } from "react-redux";
+import * as actions from "./actions.jsx";
+import Constants from "./Constants.jsx";
 
 const { Container, Card, Divider, Row, CardSpace } = Components;
 
-let sideACards = [
-  { image: "tree-1", title: "Tree 1", space: "space_a" },
-  { image: "tree-2", title: "Tree 2", space: "space_a" },
-  { image: "tree-3", title: "Tree 3", space: "space_a" },
-  { image: "tree-4", title: "Tree 4", space: "space_a" },
-  { image: "tree-5", title: "Tree 5", space: "space_a" }
-];
-
-let sideBCards = [
-  { image: "animal-1", title: "Animal 1", space: "space_b" },
-  { image: "animal-2", title: "Animal 2", space: "space_b" }
-];
-
-let createCard = (cardInfo) => {
+let createCard = cardInfo => {
   return (
     <Card
       image={"resources/images/" + cardInfo.image + ".png"}
       contentText={cardInfo.title}
-      cardId={cardInfo.cardId}
-      key={"Unique-Card-" + cardInfo.cardId}
+      cardId={cardInfo.card_id}
+      key={"Unique-Card-" + cardInfo.card_id}
       space={cardInfo.space}
+      cardData={cardInfo}
     />
   );
 };
 
 @DragDropContext(HTML5Backend)
+@connect(store => {
+  return {
+    space_a_data: store.space_a_data,
+    space_b_data: store.space_b_data
+  };
+})
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.lastUsedCardIndex = 0;
+  }
+
+  componentWillMount() {
+    this.props.dispatch(actions.loadDefaultItems());
   }
 
   render() {
@@ -50,20 +51,14 @@ class App extends React.Component {
         </Row>
         <Divider />
         <Row>
-          <CardSpace bgColor="orange" id="space_a">
-            {sideACards.map(card =>
-              createCard({
-                ...card,
-                cardId: "Card-" + this.lastUsedCardIndex++
-              })
+          <CardSpace bgColor="orange" id={Constants.SPACE_A}>
+            {this.props.space_a_data.map(card =>
+              createCard(card)
             )}
           </CardSpace>
-          <CardSpace bgColor="green" id="space_b">
-            {sideBCards.map(card =>
-              createCard({
-                ...card,
-                cardId: "Card-" + this.lastUsedCardIndex++
-              })
+          <CardSpace bgColor="green" id={Constants.SPACE_B}>
+            {this.props.space_b_data.map(card =>
+              createCard(card)
             )}
           </CardSpace>
         </Row>
