@@ -38,6 +38,26 @@ class App extends React.Component {
     this.props.dispatch(actions.loadDefaultItems());
   }
 
+  componentWillReceiveProps(nextProps)
+  {
+    if (nextProps.space_a_data !== this.props.space_a_data)
+    {
+      console.log("Called componentWillReceiveProps for space_a_data");
+    }
+
+    if (nextProps.space_b_data !== this.props.space_b_data)
+    {
+      console.log("Called componentWillReceiveProps for space_b_data");
+    }
+  }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return (
+  //     this.props.space_a_data.length !== nextProps.space_a_data.length ||
+  //     this.props.space_b_data.length !== nextProps.space_b_data.length
+  //   );
+  // }
+
   render() {
     return (
       <Container
@@ -52,14 +72,10 @@ class App extends React.Component {
         <Divider />
         <Row>
           <CardSpace bgColor="orange" id={Constants.SPACE_A}>
-            {this.props.space_a_data.map(card =>
-              createCard(card)
-            )}
+            {this.props.space_a_data.map(card => createCard(card))}
           </CardSpace>
           <CardSpace bgColor="green" id={Constants.SPACE_B}>
-            {this.props.space_b_data.map(card =>
-              createCard(card)
-            )}
+            {this.props.space_b_data.map(card => createCard(card))}
           </CardSpace>
         </Row>
       </Container>

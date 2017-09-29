@@ -36,8 +36,6 @@ export default class CardSpace extends React.Component {
       _.forEach(actions.moveCardToSpace(result.card_id, result.from_space, result.to_space), (function(action) {
         this.props.dispatch(action);
       }).bind(this));
-      
-      // this.props.dispatch(actions.moveCardToSpace(result.card_id, result.from_space, result.to_space));
     }
   }
 
@@ -45,7 +43,10 @@ export default class CardSpace extends React.Component {
     const { isOver, canDrop, connectDropTarget } = this.props;
 
     return connectDropTarget(
-      <div className={"col s6 " + (this.props.bgColor || "")}>
+      <div className={"col s6 " + (this.props.bgColor || "")} style={{
+        minWidth: '100px',
+        minHeight: '100px'
+      }}>
         {this.props.children}
       </div>
     );

@@ -29,24 +29,30 @@ export default function reducer(
       var newState = { ...state };
 
       let foundItem = null;
+      let clonedData = null;
       if (_.isEqual(action.payload.fromSpace, Constants.SPACE_A)) {
-        foundItem = _.find(newState.space_a_data, {
+        clonedData = _.clone(newState.space_a_data);
+        foundItem = _.find(clonedData, {
           card_id: action.payload.cardId
         });
         if (!_.isEmpty(foundItem)) {
-          newState.last_used_card = _.remove(newState.space_a_data, o =>
+          newState.last_used_card = _.remove(clonedData, o =>
             _.isEqual(o.card_id, action.payload.cardId)
           );
-          // _.remove(newState.space_a_data, (o) => _.isEqual(o.card_id, action.payload.cardId));
+
+          newState.space_a_data = clonedData;
         }
       } else {
-        foundItem = _.find(state.space_b_data, {
-          card_id: state.payload.cardId
+        clonedData = _.clone(newState.space_b_data);
+        foundItem = _.find(clonedData, {
+          card_id: action.payload.cardId
         });
         if (!_.isEmpty(foundItem)) {
-          newState.last_used_card = _.remove(newState.space_b_data, o =>
+          newState.last_used_card = _.remove(clonedData, o =>
             _.isEqual(o.card_id, action.payload.cardId)
           );
+
+          newState.space_b_data = clonedData;
         }
       }
 
@@ -58,55 +64,26 @@ export default function reducer(
     case actionTypes.ADD_CARD: {
       var newState = { ...state };
 
-      console.dir(newState);
-      console.dir(action);
-
       if (
         newState.last_used_card !== null &&
         _.isEqual(newState.last_used_card[0].card_id, action.payload.cardId)
       ) {
         if (_.isEqual(action.payload.toSpace, Constants.SPACE_A)) {
-          _.union(newState.space_a_data, [
-            {
-              ...newState.last_used_card[0],
-              space: Constants.SPACE_A,
-              card_id: ++newState.cardNumber
-            }
-          ]);
-        } else if (_.isEqual(action.payload.toSpace, Constants.SPACE_A)) {
-          _.union(newState.space_a_data, [
-            {
-              ...newState.last_used_card[0],
-              space: Constants.SPACE_B,
-              card_id: ++newState.cardNumber
-            }
-          ]);
+          newState.space_a_data.push({
+            ...newState.last_used_card[0],
+            space: Constants.SPACE_A,
+            card_id: ++newState.cardNumber
+          });
+          newState.last_used_card = null;
+        } else if (_.isEqual(action.payload.toSpace, Constants.SPACE_B)) {
+          newState.space_b_data.push({
+            ...newState.last_used_card[0],
+            space: Constants.SPACE_B,
+            card_id: ++newState.cardNumber
+          });
+          newState.last_used_card = null;
         }
       }
-
-      // if (
-      //   _.isEqual(action.payload.toSpace, Constants.SPACE_A) &&
-      //   newState.last_used_card !== null
-      // ) {
-      //   newState.space_a_data = _.union(newState.space_a_data, [
-      //     {
-      //       ...newState.last_used_card[0].cardData,
-      //       space: Constants.SPACE_A,
-      //       card_id: ++newState.cardNumber
-      //     }
-      //   ]);
-      // } else if (
-      //   _.isEqual(action.payload.toSpace, Constants.SPACE_B) &&
-      //   newState.last_used_card !== null
-      // ) {
-      //   newState.space_b_data = _.union(newState.space_b_data, [
-      //     {
-      //       ...newState.last_used_card[0].cardData,
-      //       space: Constants.SPACE_B,
-      //       card_id: ++newState.cardNumber
-      //     }
-      //   ]);
-      // }
 
       return newState;
     }
